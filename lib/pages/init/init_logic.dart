@@ -10,6 +10,7 @@ import '../../api/navidrome_api.dart';
 import '../../entity/login/navidrome_data.dart';
 import '../../helper/cache_helper.dart';
 import '../../values/strings.dart';
+import '../frame/frame_page.dart';
 
 class InitLogic extends GetxController{
   /// App 服务
@@ -69,10 +70,10 @@ class InitLogic extends GetxController{
     await appService.inited();
     await CacheHelper.setSourceId(MusicSourceType.dmusic.id);
     SmartDialog.dismiss();
-    // Get.offAll(
-    //       () => FramePage(),
-    //   arguments: {"route": MusicSourceType.dmusic.route},
-    // );
+    Get.offAll(
+          () => FramePage(),
+      arguments: {"route": MusicSourceType.dmusic.route},
+    );
   }
 
   /// 导航者 - 登录
@@ -109,10 +110,10 @@ class InitLogic extends GetxController{
       await CacheHelper.setSourceId(server);
       SmartDialog.dismiss();
       SmartDialog.showToast("连接成功");
-      // Get.offAll(
-      //       () => FramePage(),
-      //   arguments: {"route": MusicSourceType.navidrome.route},
-      // );
+      Get.offAll(
+            () => FramePage(),
+        arguments: {"route": MusicSourceType.navidrome.route},
+      );
     } else {
       SmartDialog.dismiss();
       SmartDialog.showToast(result.msg ?? "连接失败");

@@ -4,7 +4,10 @@ import 'package:k_music_flutter/entity/music_source.dart';
 import 'package:k_music_flutter/helper/cache_helper.dart';
 import 'package:k_music_flutter/services/app_service.dart';
 
+import '../../services/play_service.dart';
+import '../frame/frame_page.dart';
 import '../init/init_page.dart';
+import '../play/play_logic.dart';
 
 /// 启动页
 class SplashPage extends StatefulWidget {
@@ -26,14 +29,17 @@ class _SplashPageState extends State<SplashPage> {
     // 放置服务
     AppService appService = Get.put(AppService());
     appService.init();
+    Get.put(PlayService());
+    // 放置播放控制器
+    Get.lazyPut(() => PlayLogic());
     MusicSource? source = await CacheHelper.getSource();
     if (source != null) {
       /// 跳至首页
-      // Get.offAll(
-      //       () => FramePage(),
-      //   arguments: {"route": source.type.route},
-      //   transition: Transition.fadeIn,
-      // );
+      Get.offAll(
+            () => FramePage(),
+        arguments: {"route": source.type.route},
+        transition: Transition.fadeIn,
+      );
     } else {
       await Future.delayed(Durations.extralong4);
       Get.offAll(() => InitPage());
